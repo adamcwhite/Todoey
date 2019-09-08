@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // This is the first thing that loads when the app starts
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Get default location of Realm database
+        print(Realm.Configuration.defaultConfiguration.fileURL)
+        
+        let data = Data()
+        data.name = "Adam"
+        data.age = 39
+        
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(data)
+            }
+        } catch {
+            print("Error initialising new realm, \(error)")
+        }
+        
         
         return true
     }
