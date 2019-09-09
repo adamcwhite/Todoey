@@ -23,15 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Get default location of Realm database
         print(Realm.Configuration.defaultConfiguration.fileURL)
         
-        let data = Data()
-        data.name = "Adam"
-        data.age = 39
-        
         do {
             let realm = try Realm()
-            try realm.write {
-                realm.add(data)
-            }
         } catch {
             print("Error initialising new realm, \(error)")
         }
