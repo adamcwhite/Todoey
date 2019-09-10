@@ -42,24 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         }
                     }
                 }
-                
-                if (oldSchemaVersion < 2) {
-                    // Nothing to do!
-                    // Realm will automatically detect new properties and removed properties
-                    // And will update the schema on disk automatically
-                }
-                
-                if (oldSchemaVersion < 3) {
-                    // Nothing to do!
-                    // Realm will automatically detect new properties and removed properties
-                    // And will update the schema on disk automatically
-                    migration.enumerateObjects(ofType: Category.className()) { oldObject, newObject in
-                        // add a background colour if empty
-                        if newObject!["bgColour"] as! String == "" {
-                            newObject!["bgColour"] = UIColor.randomFlat.hexValue()
-                        }
-                    }
-                }
         })
         
         // Tell Realm to use this new configuration object for the default Realm

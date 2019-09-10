@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class TodoListViewController: SwipeTableViewController {
 
@@ -25,6 +26,7 @@ class TodoListViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        tableView.separatorStyle = .none
     }
     
     //MARK - Tableview Datasource methods
@@ -40,16 +42,12 @@ class TodoListViewController: SwipeTableViewController {
             
             //Ternary operator ==>
             // value = condition ? valueIfTrue : valueIfFalse
-            
             cell.accessoryType = item.done  ? .checkmark : .none
             
-            // Ternary replaces the below if statement
-            //        if item.done == true {
-            //            cell.accessoryType = .checkmark
-            //        }
-            //        else {
-            //            cell.accessoryType = .none
-            //        }
+            if let colour = UIColor(hexString: selectedCategory!.bgColour)?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count)) {
+                cell.backgroundColor = colour
+                cell.textLabel?.textColor = ContrastColorOf(colour, returnFlat: true)
+            }
         } else {
             cell.textLabel?.text = "No items added"
         }
