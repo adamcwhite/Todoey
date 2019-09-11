@@ -34,27 +34,29 @@ class TodoListViewController: SwipeTableViewController {
         
         title = selectedCategory?.name
         
-        guard let navBar = navigationController?.navigationBar else {
-            fatalError("Navigation controller does not exist.")
-        }
-        
         guard let colourHex = selectedCategory?.bgColour else { fatalError() }
         
-        guard let navBarColour = UIColor(hexString: colourHex) else { fatalError() }
-        
-        navBar.barTintColor = UIColor(hexString: colourHex)
-        navBar.tintColor = ContrastColorOf(navBarColour, returnFlat: true)
-        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: ContrastColorOf(navBarColour, returnFlat: true)]
-        searchBar.barTintColor = UIColor(hexString: colourHex)
+        updateNavBar(withHexCode: colourHex)
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        guard let originalColour = UIColor(hexString: "1D9BF6") else { fatalError() }
+        updateNavBar(withHexCode: "1D9BF6")
+    }
+    
+    //MARK: - Nav Bar Setup Methods
+    func updateNavBar(withHexCode colourHexCode: String) {
+        guard let navBar = navigationController?.navigationBar else {
+            fatalError("Navigation controller does not exist.")
+        }
         
-        navigationController?.navigationBar.barTintColor = originalColour
-        navigationController?.navigationBar.tintColor = FlatWhite()
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: FlatWhite()]
+        guard let navBarColour = UIColor(hexString: colourHexCode) else { fatalError() }
+        
+        navBar.barTintColor = UIColor(hexString: colourHexCode)
+        navBar.tintColor = ContrastColorOf(navBarColour, returnFlat: true)
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: ContrastColorOf(navBarColour, returnFlat: true)]
+        searchBar.barTintColor = UIColor(hexString: colourHexCode)
+
     }
     
     //MARK - Tableview Datasource methods
