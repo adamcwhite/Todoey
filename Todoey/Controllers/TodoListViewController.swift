@@ -32,13 +32,13 @@ class TodoListViewController: SwipeTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        title = selectedCategory?.name
+        
         guard let navBar = navigationController?.navigationBar else {
             fatalError("Navigation controller does not exist.")
         }
         
         guard let colourHex = selectedCategory?.bgColour else { fatalError() }
-        
-        title = selectedCategory?.name
         
         guard let navBarColour = UIColor(hexString: colourHex) else { fatalError() }
         
@@ -47,6 +47,14 @@ class TodoListViewController: SwipeTableViewController {
         navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: ContrastColorOf(navBarColour, returnFlat: true)]
         searchBar.barTintColor = UIColor(hexString: colourHex)
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let originalColour = UIColor(hexString: "1D9BF6") else { fatalError() }
+        
+        navigationController?.navigationBar.barTintColor = originalColour
+        navigationController?.navigationBar.tintColor = FlatWhite()
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: FlatWhite()]
     }
     
     //MARK - Tableview Datasource methods
